@@ -1,0 +1,258 @@
+\def\thud@unisep{.5em}
+\def\thud@se@and{.2ex}
+\def\thud@se@qual{1ex}
+\def\thud@se@sep{2em}
+
+\geometry{%
+    hcentering,%
+    bindingoffset=.025\paperwidth,%
+    outer=.075\paperwidth,%
+    nofoot,nomarginpar,%
+    vdivide={.08\paperheight,*,.06\paperheight}%
+}
+
+\ifthud@phd\let\thud@spacing\singlespacing\else\def\thud@spacing{\setstretch{1.3}}\fi
+
+\def\thud@newpagestyle#1#2{
+    \@namedef{ps@#1}{
+        \let\@oddfoot\@empty
+        \let\@evenfoot\@empty
+        \let\@mkboth\markboth
+        \let\ps@plain\ps@empty%
+        \@nameuse{thud@chs@#1}%
+        \@nameuse{thud@pts@#1}%
+        #2%
+    }
+}
+
+\def\chaptermark#1{\ifnum\c@secnumdepth>\m@ne\relax\def\thud@tmpcmd{\chaptername\ \thechapter\ ---  #1}\else\let\thud@tmpcmd\@empty\fi\markboth{\thud@tmpcmd}{\thud@tmpcmd}}
+\def\sectionmark#1{\markright{\ifnum\c@secnumdepth>\z@\relax\thesection\quad \fi#1}}
+
+%\def\thud@headruledbox#1#2#3{\underline{\makebox[\textwidth]{%
+%    {\small#1\bfseries#2\hfill#3}\rule[-0.5ex]{0pt}{1ex}%
+%}}}
+%\def\thud@defheads#1{%
+%	\def\@evenhead{\thud@headrulebox{#1}\thepage\leftmark}%
+%	\def\@oddhead{\thud@headrulebox{#1}\rightmark\thepage}%
+%}
+
+%\def\thud@headbox#1#2#3{\makebox[\textwidth]{%
+%			{\small#1\bfseries#2\hfill#3}\rule[-0.5ex]{0pt}{1ex}%
+%}}
+
+\def\thud@defheads#1{%
+	\def\@evenhead{\sffamily\small\thepage\qquad #1\leftmark\hfill}%
+	\def\@oddhead{\hfill\sffamily\small #1\rightmark\qquad\thepage}%
+}
+
+\let\ps@bookplain\ps@plain
+
+\thud@newpagestyle{plain}{\thud@defheads\relax}
+\thud@newpagestyle{big}{\thud@defheads\relax}
+\thud@newpagestyle{sfbig}{\thud@defheads\sffamily}
+
+%\def\thud@declgigantic{\DeclareFontShape{T1}{cmr}{ch}{n}{<-> cmr17}{}}
+%\def\thud@gigantic{\fontsize{99.45}{100\p@}\usefont{T1}{cmr}{ch}{n}}
+\def\thud@gigantic{\fontsize{99.45}{100\p@}\sffamily}
+
+
+\thud@save{@makechapterhead}
+\thud@save{@makeschapterhead}
+\long\def\thud@mkchaphdstub#1#2#3{%
+    {\parindent\z@\relax
+    \raggedleft\normalfont
+    \vspace*{30\p@}%
+    #1%% Either \iftrue or \iffalse
+        \ifnum\c@secnumdepth>\m@ne\relax
+            \if@mainmatter
+                {\thud@gigantic\thechapter}\Huge\par\nobreak\vskip15\p@\relax%
+            \fi%
+        \fi%
+    \fi%
+    \interlinepenalty\@M\relax%
+    \Huge\bfseries#2#3\par\nobreak%
+    \vskip40\p@\relax}%
+}
+\long\def\thud@defmakechapterhead#1{
+    \def\@makechapterhead##1{\expandafter\thud@mkchaphdstub\noexpand\iftrue{#1}{##1}}
+    \def\@makeschapterhead##1{\expandafter\thud@mkchaphdstub\noexpand\iffalse{#1}{##1}}
+}
+
+\def\thud@chs@plain{%
+    \thud@restore{@makechapterhead}
+    \thud@restore{@makeschapterhead}
+}
+\def\thud@chs@big{\thud@defmakechapterhead\relax}
+\def\thud@chs@sfbig{\thud@defmakechapterhead\sffamily}
+
+\thud@save{@part}
+\thud@save{@spart}
+\long\def\thud@spartstub#1#2{
+    {\raggedleft
+    \interlinepenalty\@M\relax
+    \normalfont%
+    #1%% Either \iftrue or \iffalse
+        \ifnum\c@secnumdepth>-2\relax
+            \if@mainmatter
+                {\thud@gigantic\thepart\par\relax}%
+            \fi%
+        \fi%
+    \else%
+        %\hrule\vskip20\p@
+        \relax%
+    \fi%
+    \Huge\bfseries#2\par}%
+    \@endpart%
+}
+\def\thud@defpartstub#1{
+    \def\@part[##1]##2{
+        \ifnum\c@secnumdepth>-2\relax
+            \refstepcounter{part}%
+            \addcontentsline{toc}{part}{\thepart\hspace{1em}##1}%
+        \else
+            \addcontentsline{toc}{part}{##1}%
+        \fi%
+        \markboth{}{}%
+        \expandafter\thud@spartstub\noexpand\iftrue{#1##2}%
+    }
+    \def\@spart##1{
+        \expandafter\thud@spartstub\noexpand\iffalse{#1##1}%
+    }
+}
+
+\def\thud@pts@plain{%
+    \thud@restore{@part}
+    \thud@restore{@spart}
+}
+\def\thud@pts@big{%
+    \thud@defpartstub\relax
+}
+\def\thud@pts@sfbig{%
+    \thud@defpartstub\sffamily
+}
+
+\def\printindex{\InputIfFileExists{\jobname.ind}{}{\ClassWarningNoLine{\@currname}{No file \jobname.ind.}}}
+
+\newif\ifthud@endpart
+\def\maybeblank{\ifthud@endpart\else\ifodd\c@page\@endpart\fi\fi\global\thud@endpartfalse}
+\g@addto@macro\@endpart{\global\thud@endparttrue}
+\def\thud@patchMatter#1{%
+    \thud@save{#1matter}
+    \@namedef{#1matter}{%
+        \thud@save{cleardoublepage}
+        \def\cleardoublepage{\maybeblank\thud@endparttrue}
+        \@nameuse{thud@save@#1matter}
+        \thud@restore{cleardoublepage}
+    }
+}
+\thud@patchMatter{main}
+\thud@patchMatter{back}
+\thud@save{part}
+\def\part{\maybeblank\thud@save@part}
+
+\newcounter{thud@secnumdepth}
+\newif\ifthud@unnmkchp
+\thud@save{chapter}
+\def\chapter{\maybeblank\@ifplus{\thud@unnmkchptrue\thud@save@chapter}{\thud@unnmkchpfalse\thud@save@chapter}}
+\thud@save{@chapter}
+\def\@chapter[#1]#2{%
+    \ifthud@unnmkchp\c@thud@secnumdepth=\c@secnumdepth\relax\c@secnumdepth=-100\relax\fi%
+    \thud@save@@chapter[#1]{#2}%
+    \ifthud@unnmkchp\c@secnumdepth=\c@thud@secnumdepth\relax\fi%
+}
+\thud@save{@schapter}
+\def\@schapter#1{\thud@save@@schapter{#1\ifthud@unnmkchp\@mkboth{#1}{#1}\fi}}
+
+\def\abstract{\chapter+*{\abstractname}}
+\def\acknowledgements{\chapter+*{\acknowledgementsname}}
+\def\summary{\chapter+*{\summaryname}}
+
+\newenvironment{titlelike}[1]{
+    \cleardoublepage\thispagestyle{empty}%
+    \def\thud@titlelike{#1}%
+    \vspace*{\z@\@plus.3fil}%
+    \begin{\thud@titlelike}%
+}{
+    \end{\thud@titlelike}%
+    \vspace*{\z@\@plus.6fil}%
+    \newpage\thispagestyle{empty}%
+}
+\newenvironment{approval}{\begin{titlelike}{center}}{\end{titlelike}}
+\newenvironment{dedication}{\begin{titlelike}{flushright}}{\end{titlelike}}
+
+\def\thud@patchNoUc#1{
+    \thud@save{#1}
+    \@namedef{#1}{
+        \thud@save{MakeUppercase}
+        \let\MakeUppercase\@iden
+        \@nameuse{thud@save@#1}%
+        \thud@restore{MakeUppercase}
+    }
+}
+\def\thud@patchNoUcI#1{%
+    \thud@save{#1}
+    \@namedef{#1}##1{
+        \thud@save{MakeUppercase}
+        \let\MakeUppercase\@iden
+        \@nameuse{thud@save@#1}{##1}%
+        \thud@restore{MakeUppercase}
+    }
+}
+\thud@patchNoUc{tableofcontents}
+\thud@patchNoUc{listoffigures}
+\thud@patchNoUc{listoftables}
+\thud@patchNoUc{theindex}
+\thud@patchNoUcI{thebibliography}
+
+\thud@save{@starttoc}
+\def\@starttoc#1{\singlespacing\thud@save@@starttoc{#1}\thud@spacing}
+
+\def\maketitle{
+    \begin{titlepage}%
+        \noindent%
+%        \ifpdf\makebox[\z@][l]{\raisebox{-.98\textheight}[\z@][\z@]{\includegraphics[height=\textheight]{UdineLogo}}}\fi%
+        \begin{minipage}[t][\textheight][s]{.99\linewidth}%
+        	\sffamily
+            \let\footnotesize\small
+            \let\footnoterule\relax
+            {\Large\textsc{\thud@universityA}}%
+            \ifx\thud@chair\@empty\else\par\medskip\chairname: \thud@chair\fi%
+            \vfill%
+            \begin{center}%
+                {\Large\scshape \thesisname \ifx\thud@phdnumber\@empty\else\space\thud@phdnumber\fi\par}
+                \vskip 4em\relax%
+                {\Huge\bfseries\@title\par}
+                \vskip 5em\@plus1fill\relax%
+                {\large%
+                    \parbox[t]{.4\linewidth}{%
+                        \let\thud@candidate\@author
+                        \thud@showentry*{candidate}%
+                    }%
+                    \qquad%
+                    \parbox[t]{.4\linewidth}{%
+                        \thud@showentry{supervisor}%
+                        \thud@showentry{cosupervisor}%
+                        \thud@showentry{tutor}%
+                        \thud@showentry{reviewer}%
+                    }%
+                }
+                \par\vskip 1em\@plus1fill\relax%
+                {\large\ifx\thud@cycle\@empty\datename\else\cyclename~\thud@cycle\ --- \shortdatename\fi~\@date}\par
+            \end{center}%
+        \end{minipage}%
+    \end{titlepage}
+    \thispagestyle{empty}%
+    \setcounter{footnote}{0}
+    {\parindent\z@\relax%
+        \textsc{\institutecontactsname}\\\thud@universityB\par%
+        \ifx\thud@contacts\@empty\else\vskip2em\relax\textsc{\authorcontactsname}\\\thud@contacts\par\fi%
+        \ifx\thud@rights\@empty\else\vfill\thud@rights\par\fi%
+     }%
+    \thud@spacing%
+    \let\thanks\relax\let\maketitle\relax
+}
+
+\AtBeginDocument{%
+    \pagestyle{sfbig}%
+    \frontmatter%
+}

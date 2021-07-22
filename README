@@ -1,0 +1,16 @@
+Procedura per laurearsi:
+
+1. Scaricare thud.zip.
+2. Scompattare il file; questo crea una cartella “thud”.
+3. Editare il file thesis.tex, che sarà il file principale della tesi. È sufficiente riempire i campi necessari e aggiungendo tutto il materiale che serve. Il codice dovrebbe essere auto-esplicativo.
+4. Compilare thesis.tex con pdflatex.
+5. Se si usa bibtex (fortemente consigliato!): riempire il file thud.bib, passare bibtex, poi pdflatex e pdflatex.
+6. Caricare thesis.pdf su Esse3 entro la scadenza.
+7. Se si fanno le slide in latex:
+  7.1 editare il file slides.tex. È sufficiente riempire i campi necessari e aggiungendo tutto il materiale che serve. I campi rilevanti sono gli stessi di thesis.tex, per cui potete copiare e incollare il preambolo (la parte prima di \begin{document}). Il codice dovrebbe essere auto-esplicativo.
+  7.2. Compilare slides.tex con pdflatex.
+  7.3. Esporre slides.pdf.
+8. Se si usa il formato PPT imposto dal Corso di Laurea:
+  8.1 arrangiatevi
+  8.2 esporre slide.ppt
+9. Ubriacarsi con amici e parenti.
