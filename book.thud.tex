@@ -215,7 +215,7 @@
         	\sffamily
             \let\footnotesize\small
             \let\footnoterule\relax
-            {\Large\textsc{\thud@universityA}}%
+            {\Large\textsc{\thud@universityA\ifx\thud@opt@aauheader\@empty\else\thud@universityAaau\fi}}%
             \ifx\thud@chair\@empty\else\par\medskip\chairname: \thud@chair\fi%
             \vfill%
             \begin{center}%

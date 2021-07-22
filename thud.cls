@@ -7,6 +7,7 @@
 \def\thud@tmpcmd{\relax}
 \DeclareStringOption[\relax]{beamer}[]
 \DeclareStringOption{target}
+\DeclareStringOption{aauheader}
 
 
 \ProcessKeyvalOptions{\@currname}
@@ -113,7 +114,10 @@
 
 
 \gdef\thud@universityA{%
-	\includegraphics[width=\textwidth]{bannerdmif_\languagename.pdf}\\
+	\includegraphics[width=\textwidth]{banners/banner_uniud_\languagename.pdf}\\
+}
+\gdef\thud@universityAaau{%
+	\includegraphics[width=\textwidth]{banners/banner_aau_\thud@opt@aauheader.pdf}\\
 }
 \gdef\thud@universityB{%
 	Dipartimento di Scienze Matematiche, Informatiche e Fisiche\\%
