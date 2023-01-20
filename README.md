@@ -1,6 +1,6 @@
 # THUD: THesis at UniUD
 
-Questo è un formato LaTeX per le tesi di laurea in Informatica ed affini presso il Dipartimento di Scienze Matematiche, Informatiche e Fisiche.
+Questo è un formato LaTeX per le tesi di laurea in Informatica ed affini presso il Dipartimento di Scienze Matematiche, Informatiche e Fisiche dell'Università degli Studi di Udine.
 
 Si assume che sappiate scrivere in LaTeX; altrimenti, [sappiatelo](https://www.learnlatex.org/en/).
 
@@ -13,5 +13,5 @@ Si assume che sappiate scrivere in LaTeX; altrimenti, [sappiatelo](https://www.l
 5. Se si usa bibtex (fortemente consigliato!): riempire il file thud.bib, passare bibtex, poi pdflatex e pdflatex.
 6. Caricare thesis_*cognome*.pdf su Esse3 entro la scadenza.
 7. Preparare le slide, eventualmente con il formato ufficiale del dipartimento.
-8. Esporre slide.ppt.
+8. Esporre slide.pptx.
 9. Ubriacarsi con amici e parenti.
