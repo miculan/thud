@@ -7,3 +7,5 @@ thesis*.out
 thesis*.pdf
 thesis*.synctex.gz
 thesis*.toc
+thesis*.lof
+thesis*.lot

@@ -207,9 +207,6 @@
 \thud@save{@starttoc}
 \def\@starttoc#1{\singlespacing\thud@save@@starttoc{#1}\thud@spacing}
 
-\let\oldtableofcontents\tableofcontents
-\renewcommand{\tableofcontents}{\begingroup\pagestyle{empty}\oldtableofcontents\cleardoublepage\addtocounter{page}{-1}\endgroup}
-
 \def\maketitle{
     \begin{titlepage}%
         \noindent%
